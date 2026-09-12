@@ -20,7 +20,11 @@
     "publisher": "TrulyScarlet",
     "copyright": "Copyright (c) 2026 TrulyScarlet",
     "shortDescription": "Lightweight Discord Desktop Client",
-    "longDescription": "ScarCord is a high-performance, lightweight Discord desktop wrapper built on Tauri v2 and native WebView2.",
+    "longDescription": "ScarCord is a high-performance, lightweight Discord desktop wrapper built on Tauri v2 and native WebView2/WebKit.",
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.15"
+    },
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

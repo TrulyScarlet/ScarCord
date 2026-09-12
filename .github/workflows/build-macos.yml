@@ -1,0 +1,50 @@
+name: Build and Release macOS App
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Tauri macOS App (.dmg & .app)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
+        run: |
+          npx @tauri-apps/cli build --target universal-apple-darwin
+
+      - name: Upload macOS Artifacts to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME=${{ github.ref_name }}
+          if [ -z "$TAG_NAME" ] || [ "$TAG_NAME" = "master" ]; then
+            TAG_NAME="v0.1.0"
+          fi
+          echo "Uploading macOS build to release $TAG_NAME..."
+          gh release upload "$TAG_NAME" src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg --clobber || true
+          gh release upload "$TAG_NAME" src-tauri/target/universal-apple-darwin/release/bundle/macos/*.app.tar.gz --clobber || true
