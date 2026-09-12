@@ -16,6 +16,7 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "createUpdaterArtifacts": true,
     "publisher": "TrulyScarlet",
     "copyright": "Copyright (c) 2026 TrulyScarlet",
     "shortDescription": "Lightweight Discord Desktop Client",
@@ -27,5 +28,13 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYwNzEzNzk0MzkzQkMzMjcKUldRbnd6czVsRGR4OEYzSmxyMWxUWS8vMUVKbFFHTHVCVkx2T0thQjluTklXZXdzU21pRXRhRDIK",
+      "endpoints": [
+        "https://github.com/TrulyScarlet/ScarCord/releases/latest/download/latest.json"
+      ]
+    }
   }
 }

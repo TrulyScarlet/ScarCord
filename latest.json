@@ -1,0 +1,11 @@
+{
+  "version": "v0.1.0",
+  "notes": "ScarCord v0.1.0 - Lightweight Discord Desktop Client with OTA updates.",
+  "pub_date": "2026-09-12T07:06:53Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEUwdzBBY0dZTDUxVTZyNll6NnNKUmxHRnJJbnM1QU1EQ2tlYWwyM1B6TWJIMEc5bVpIWm9GRVBrWk1DQzRHQ3ZtajJGOGdlQ1Fxa25SVkRzNHBJSndjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MTk2ODAzCWZpbGU6U2NhckNvcmRfMC4xLjBfeDY0LXNldHVwLmV4ZQpzY3czLzVPbjlabTFhRkdtZHYzeW5FTFFwQmgrdnNNV1Q0WW16N3RuQThVK2plb2xNTlV2RXc5eU9MejlQcFBGbGdOdXZUMS85YiswOThBZTdoOWNEdz09Cg==",
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.0/ScarCord_0.1.0_x64-setup.exe"
+    }
+  }
+}

@@ -5,6 +5,54 @@ use tauri::{
     Manager, WebviewUrl, WindowEvent,
 };
 use tauri_plugin_opener::OpenerExt;
+use tauri_plugin_updater::UpdaterExt;
+
+fn check_for_updates_background(app_handle: tauri::AppHandle) {
+    tauri::async_runtime::spawn(async move {
+        // Allow Discord to initialize smoothly before checking
+        std::thread::sleep(std::time::Duration::from_secs(5));
+
+        if let Ok(updater) = app_handle.updater() {
+            if let Ok(Some(update)) = updater.check().await {
+                println!("New update found: v{}", update.version);
+                
+                // Show notification in webview toast
+                if let Some(win) = app_handle.get_webview_window("main") {
+                    let js = format!(
+                        "console.log('[ScarCord] Found update v{}. Downloading in background...');",
+                        update.version
+                    );
+                    let _ = win.eval(&js);
+                }
+
+                // Download and install update
+                let mut downloaded = 0;
+                let res = update
+                    .download_and_install(
+                        |chunk_length, content_length| {
+                            downloaded += chunk_length;
+                            if let Some(total) = content_length {
+                                println!("Downloaded {} / {} bytes", downloaded, total);
+                            }
+                        },
+                        || {
+                            println!("Download complete, installing update...");
+                        },
+                    )
+                    .await;
+
+                if let Ok(()) = res {
+                    println!("Update installed successfully. Prompting restart...");
+                    if let Some(win) = app_handle.get_webview_window("main") {
+                        let _ = win.eval(
+                            "if (confirm('ScarCord has downloaded an update. Restart now to apply?')) { window.location.reload(); }"
+                        );
+                    }
+                }
+            }
+        }
+    });
+}
 
 fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
     let show_item = MenuItem::with_id(app, "show", "Show Discord", true, None::<&str>)?;
@@ -65,8 +113,10 @@ fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .setup(|app| {
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .setup(move |app| {
             let app_handle = app.handle().clone();
+            check_for_updates_background(app_handle.clone());
 
             // Client injection: 1:1 Discord native top-bar integration with proper icon clearance
             let init_script = r#"
