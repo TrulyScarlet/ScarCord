@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "ScarCord",
+  "version": "0.1.0",
+  "identifier": "com.scarcord.app",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "publisher": "TrulyScarlet",
+    "copyright": "Copyright (c) 2026 TrulyScarlet",
+    "shortDescription": "Lightweight Discord Desktop Client",
+    "longDescription": "ScarCord is a high-performance, lightweight Discord desktop wrapper built on Tauri v2 and native WebView2.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
