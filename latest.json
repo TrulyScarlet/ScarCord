@@ -1,11 +1,11 @@
 {
-  "version": "v0.1.1",
-  "notes": "ScarCord v0.1.1 - Minor update: update scarcord info, taskbar/tray branding, and mixer identity.",
-  "pub_date": "2026-09-13T02:38:48Z",
+  "notes": "ScarCord v0.1.2 - WASAPI Audio Session Interceptor for Windows Volume Mixer (renames audio stream to ScarCord).",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.1/ScarCord_0.1.1_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEJTTkQ1NEN6NUJRZjEySW05RHpLb0t4UVRqKzBoYlB6dkd6Tko0YmQ1ZkVLR3NYeHFFcjh1ZitTQzZBMWpkK0FDV3psSXNCOUFqcHFzT2c1OEVuL3drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjY3MTEzCWZpbGU6U2NhckNvcmRfMC4xLjFfeDY0LXNldHVwLmV4ZQpMUFNtaVhsbDB0R1JzQ2cvbXdHd3NUNGFzek1INFZBYkZ2by9JYVdSN0xZekt5eFRaK1ZWbXpRbWhNcGt6QjIzMmVIa3M0VkpiQTdjRm9SWkJ1STNDQT09Cg=="
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.2/ScarCord_0.1.2_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OFB4elNka25xMzF3YUVCbE9BMWhOL21HZzA0aXFkYjVHeUIyWTVldFkrUFJ0ZGRxTFViekNmaVVYWXVJSERuNFNhSjhuOSszOC84a2s1M0VnSGpWTVFrPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjcxMzE4CWZpbGU6U2NhckNvcmRfMC4xLjJfeDY0LXNldHVwLmV4ZQpnbTdHVE1RdTNnYjA5UCtCaXJZU2dtZjJpWklGVHFraUJEUHFaWnBSWTQrTEU2S2V5ckptekNOeU8zMURnWHR1V08zUVV4cXhYK01NSmg1dzBlQnVDZz09Cg=="
     }
-  }
+  },
+  "version": "v0.1.2",
+  "pub_date": "2026-09-13T03:48:52Z"
 }

@@ -8,6 +8,9 @@ use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_updater::UpdaterExt;
 use tauri_plugin_dialog::DialogExt;
 
+#[cfg(target_os = "windows")]
+mod audio_mixer;
+
 fn check_for_updates(app_handle: tauri::AppHandle, manual: bool) {
     tauri::async_runtime::spawn(async move {
         if !manual {
@@ -158,6 +161,11 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(move |app| {
+            #[cfg(target_os = "windows")]
+            {
+                audio_mixer::start_volume_mixer_fix("ScarCord");
+            }
+
             let app_handle = app.handle().clone();
             check_for_updates(app_handle.clone(), false);
 
