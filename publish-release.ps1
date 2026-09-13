@@ -55,7 +55,7 @@ if ($Cert) {
 
 # 5. Re-sign installer with Tauri Minisign AFTER Authenticode signing so hash matches exact bytes
 Write-Host "Generating accurate Minisign OTA signature for signed installer..." -ForegroundColor Yellow
-$SetupExe = Get-Item "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*_x64-setup.exe" | Select-Object -First 1
+$SetupExe = Get-Item "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*_$($Version)_x64-setup.exe" | Select-Object -First 1
 npx @tauri-apps/cli signer sign --password "" "$($SetupExe.FullName)"
 
 $sig = Get-Content "$($SetupExe.FullName).sig" -Raw
