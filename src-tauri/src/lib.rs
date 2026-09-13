@@ -407,6 +407,10 @@ pub fn run() {
 
             #[cfg(target_os = "windows")]
             {
+                let app_data = std::env::var("LOCALAPPDATA").unwrap_or_else(|_| "C:\\Users\\Default\\AppData\\Local".to_string());
+                let user_data_path = std::path::PathBuf::from(app_data).join("ScarCord").join("EBWebView");
+                builder = builder.data_directory(user_data_path);
+
                 builder = builder.additional_browser_args(
                     "--use-fake-ui-for-media-stream --autoplay-policy=no-user-gesture-required",
                 );

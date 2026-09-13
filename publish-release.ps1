@@ -20,15 +20,20 @@ Write-Host "Updating version to $Version..." -ForegroundColor Yellow
 $CargoTomlPath = "D:\ProjectP\ScarCord\src-tauri\Cargo.toml"
 $TauriConfPath = "D:\ProjectP\ScarCord\src-tauri\tauri.conf.json"
 
-(Get-Content $CargoTomlPath) -replace 'version = ".*"', "version = `"$Version`"" | Set-Content $CargoTomlPath
-(Get-Content $TauriConfPath) -replace '"version": ".*"', "`"version`": `"$Version`"" | Set-Content $TauriConfPath
+$content = Get-Content $CargoTomlPath -Raw
+$content = $content -replace '(?m)^version = ".*"', "version = `"$Version`""
+Set-Content -Path $CargoTomlPath -Value $content
 
-# 3. Build bundle using npx tauri build with signing key
+$tauriConf = Get-Content $TauriConfPath -Raw
+$tauriConf = $tauriConf -replace '"version": ".*"', "`"version`": `"$Version`""
+Set-Content -Path $TauriConfPath -Value $tauriConf
+
+# 3. Build bundle using npx @tauri-apps/cli build with signing key
 Write-Host "Building Tauri release and generating signatures..." -ForegroundColor Yellow
 $env:TAURI_SIGNING_PRIVATE_KEY_PATH = $KeyPath
 
 Set-Location -LiteralPath "D:\ProjectP\ScarCord"
-npx tauri build
+npx @tauri-apps/cli build
 
 # 4. Sign executables with Authenticode certificate (TrulyScarlet)
 Write-Host "Signing binary with TrulyScarlet certificate..." -ForegroundColor Yellow

@@ -1,11 +1,11 @@
 {
-  "version": "v0.1.0",
-  "notes": "ScarCord v0.1.0 - Fixed Windows Common Controls manifest entry point.",
-  "pub_date": "2026-09-12T07:41:18Z",
+  "notes": "ScarCord v0.1.1 - Minor update: update scarcord info, taskbar/tray branding, and mixer identity.",
+  "version": "v0.1.1",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OFBxZ2wxa2hPWGhCSHl3aVdCMHk2ODhmWjZXcFZkVTBZWk5YQTA4eUVWM25HUnBFdEE5RHk5Y1RYS3RWeTZtYVpSNTV6QzFtQ05OcUJtb1h6SWFmeWdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MTk4ODYwCWZpbGU6U2NhckNvcmRfMC4xLjBfeDY0LXNldHVwLmV4ZQpWT2xQQVFaTW5lT1Y0T1M2d28rRTZGS09kUEFEeHZURVhNTTkrUmEzZlhpbG12MVZsbXNqU1lNbDdRaC9hTTJnRm5ERjZteXBNdFpnWnV0Z3FPd2FCdz09Cg==",
-      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.0/ScarCord_0.1.0_x64-setup.exe"
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.1/ScarCord_0.1.1_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEhrV04yLy8yZlJUZHZGYzBJZVBZUHpwU0R2T0xxd1Rsem5CK0ZLL1BvTVZlWDRzQVJLNXcwbDcrc3dZR1RYOGY2R0laTFoyRUkzVEJUMnVlRmVkZXdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjY2MTMyCWZpbGU6U2NhckNvcmRfMC4xLjFfeDY0LXNldHVwLmV4ZQoyanlNWXZMMmlzQ3JadzZ2OXJPOHR4QjNTSVY5RHpjRThIUEdLNmZhRVhwbGNkU1NPcU11WEdrcUpSb2NFUlNTMFZEMXEwMnZNaDlWVmNHVzM4WGFBZz09Cg=="
     }
-  }
+  },
+  "pub_date": "2026-09-13T02:22:33Z"
 }
