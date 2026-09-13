@@ -72,9 +72,6 @@ $latestJson = @{
 } | ConvertTo-Json -Depth 5
 
 Set-Content -Path "D:\ProjectP\ScarCord\latest.json" -Value $latestJson
-} else {
-    Write-Warning "Could not find TrulyScarlet certificate in CurrentUser\My store."
-}
 
 # 5. Git Commit & Push
 Write-Host "Committing changes and pushing to Git..." -ForegroundColor Yellow
@@ -90,11 +87,22 @@ $Assets = @(
     "D:\ProjectP\ScarCord\src-tauri\target\release\scarcord.exe"
 )
 
-# Include updater assets if generated
+# Include installer assets
 if (Test-Path "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis") {
     Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*.*" | ForEach-Object {
         $Assets += $_.FullName
     }
+}
+if (Test-Path "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi") {
+    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi\*.msi" | ForEach-Object {
+        $Assets += $_.FullName
+    }
+}
+if (Test-Path "D:\ProjectP\ScarCord\TrulyScarlet.cer") {
+    $Assets += "D:\ProjectP\ScarCord\TrulyScarlet.cer"
+}
+if (Test-Path "D:\ProjectP\ScarCord\install-certificate.ps1") {
+    $Assets += "D:\ProjectP\ScarCord\install-certificate.ps1"
 }
 
 gh release create "v$Version" @Assets --title "ScarCord v$Version" --notes "ScarCord v$Version - OTA Auto-Updating release"
