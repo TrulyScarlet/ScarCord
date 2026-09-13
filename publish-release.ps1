@@ -1,6 +1,7 @@
 param(
     [Parameter(Mandatory=$true)]
-    [string]$Version
+    [string]$Version,
+    [string]$CommitMessage = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -44,8 +45,9 @@ if ($Cert) {
 
 # 5. Git Commit & Push
 Write-Host "Committing changes and pushing to Git..." -ForegroundColor Yellow
+$Msg = if ($CommitMessage) { $CommitMessage } else { "chore(release): v$Version" }
 git add .
-git commit -m "chore(release): v$Version"
+git commit -m $Msg
 git push origin master
 
 # 6. Upload release assets to GitHub

@@ -55,8 +55,8 @@ fn check_for_updates_background(app_handle: tauri::AppHandle) {
 }
 
 fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
-    let show_item = MenuItem::with_id(app, "show", "Show Discord", true, None::<&str>)?;
-    let restart_item = MenuItem::with_id(app, "reload", "Reload Discord", true, None::<&str>)?;
+    let show_item = MenuItem::with_id(app, "show", "Open ScarCord", true, None::<&str>)?;
+    let restart_item = MenuItem::with_id(app, "reload", "Reload ScarCord", true, None::<&str>)?;
     let quit_item = MenuItem::with_id(app, "quit", "Quit ScarCord", true, None::<&str>)?;
     let menu = Menu::with_items(app, &[&show_item, &restart_item, &quit_item])?;
 
@@ -66,7 +66,7 @@ fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
         .icon(icon)
         .menu(&menu)
         .show_menu_on_left_click(false)
-        .tooltip("ScarCord - Lightweight Discord")
+        .tooltip("ScarCord")
         .on_menu_event(|app, event| match event.id().as_ref() {
             "show" => {
                 if let Some(win) = app.get_webview_window("main") {
@@ -137,6 +137,39 @@ pub fn run() {
                             console.error('Tauri invoke error:', e);
                         }
                     }
+
+                    // Enforce ScarCord window title on Taskbar
+                    function updateAppTitle(title) {
+                        try {
+                            var clean = title ? title.trim() : '';
+                            var displayTitle = 'ScarCord';
+                            if (clean && clean.toLowerCase() !== 'discord' && !clean.toLowerCase().endsWith(' - discord')) {
+                                displayTitle = clean + ' - ScarCord';
+                            } else if (clean && clean.toLowerCase().endsWith(' - discord')) {
+                                displayTitle = clean.slice(0, -9).trim() + ' - ScarCord';
+                            }
+                            if (window.__TAURI_INTERNALS__ && window.__TAURI_INTERNALS__.invoke) {
+                                window.__TAURI_INTERNALS__.invoke('plugin:window|set_title', { label: 'main', value: displayTitle }).catch(function(){});
+                            }
+                        } catch(e) {}
+                    }
+
+                    try {
+                        var originalTitleDesc = Object.getOwnPropertyDescriptor(Document.prototype, 'title') ||
+                                                Object.getOwnPropertyDescriptor(HTMLDocument.prototype, 'title');
+                        if (originalTitleDesc && originalTitleDesc.set) {
+                            Object.defineProperty(document, 'title', {
+                                get: function() {
+                                    return originalTitleDesc.get.call(document);
+                                },
+                                set: function(val) {
+                                    originalTitleDesc.set.call(document, val);
+                                    updateAppTitle(val);
+                                }
+                            });
+                        }
+                    } catch(e) {}
+                    updateAppTitle(document.title);
 
                     // 1. Intercept popup links to default external browser
                     window.open = function(url) {
@@ -355,7 +388,7 @@ pub fn run() {
                 "main",
                 WebviewUrl::External(discord_url),
             )
-            .title("Discord")
+            .title("ScarCord")
             .decorations(false)
             .inner_size(1280.0, 800.0)
             .min_inner_size(800.0, 600.0)
