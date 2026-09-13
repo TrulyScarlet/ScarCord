@@ -1,11 +1,11 @@
 {
-  "notes": "ScarCord v0.1.2 - WASAPI Audio Session Interceptor for Windows Volume Mixer (renames audio stream to ScarCord).",
-  "version": "v0.1.2",
+  "pub_date": "2026-09-13T05:30:52Z",
+  "version": "v0.1.3",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.2/ScarCord_0.1.2_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEdFRHhIaStKajVmQkhPQVlpMk05SVdoZGZ4M3RQZUxPOVhpcU1XbkNERjBKekVkSlcyMFE2ZmRtc3psa3JxaWFCbEV2ZGJTdjBucWFVZGIzdFlrR1FRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjcxODU3CWZpbGU6U2NhckNvcmRfMC4xLjJfeDY0LXNldHVwLmV4ZQpteGtBRGFQQTRSaEZnNEx6QUNJdlhlSEVUN3hwVE40WjhIZEtmY2h6WlJ6L203ZzR6SHNCZ08vdEtPZ2xCb01HQ3JBaTZsWDFyMUZVb2tFVEtaZkNDUT09Cg=="
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEZVaHhQUHAyaUVFbUFlRTFYNW9jRVZtdlpabU81SzI3VnhhUVpGZmkyNjlCdWJmK2dnTFlsbU9kZHVFWk9PTVV1TWg2Y2hyMjRVNldOODA2QkhwRXdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Mjc3NDQ0CWZpbGU6U2NhckNvcmRfMC4xLjNfeDY0LXNldHVwLmV4ZQp5RXpBa055WkN0eUY2NG1WekVLRlJhZVZ6bms3MHY1eE51WUsrM1c1RU9Od2tST0s0WjhwSW5WckFlNnBnZmhjZW45R3Ftb25EUmZISmlZelVzc0NDQT09Cg==",
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.3/ScarCord_0.1.3_x64-setup.exe"
     }
   },
-  "pub_date": "2026-09-13T03:57:52Z"
+  "notes": "ScarCord v0.1.3 - Enforce single application instance to prevent duplicate running windows."
 }
