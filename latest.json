@@ -1,11 +1,11 @@
 {
-  "notes": "ScarCord v0.1.1 - Minor update: update scarcord info, taskbar/tray branding, and mixer identity.",
   "version": "v0.1.1",
+  "notes": "ScarCord v0.1.1 - Minor update: update scarcord info, taskbar/tray branding, and mixer identity.",
+  "pub_date": "2026-09-13T02:38:48Z",
   "platforms": {
     "windows-x86_64": {
       "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.1/ScarCord_0.1.1_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEhrV04yLy8yZlJUZHZGYzBJZVBZUHpwU0R2T0xxd1Rsem5CK0ZLL1BvTVZlWDRzQVJLNXcwbDcrc3dZR1RYOGY2R0laTFoyRUkzVEJUMnVlRmVkZXdBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjY2MTMyCWZpbGU6U2NhckNvcmRfMC4xLjFfeDY0LXNldHVwLmV4ZQoyanlNWXZMMmlzQ3JadzZ2OXJPOHR4QjNTSVY5RHpjRThIUEdLNmZhRVhwbGNkU1NPcU11WEdrcUpSb2NFUlNTMFZEMXEwMnZNaDlWVmNHVzM4WGFBZz09Cg=="
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEJTTkQ1NEN6NUJRZjEySW05RHpLb0t4UVRqKzBoYlB6dkd6Tko0YmQ1ZkVLR3NYeHFFcjh1ZitTQzZBMWpkK0FDV3psSXNCOUFqcHFzT2c1OEVuL3drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MjY3MTEzCWZpbGU6U2NhckNvcmRfMC4xLjFfeDY0LXNldHVwLmV4ZQpMUFNtaVhsbDB0R1JzQ2cvbXdHd3NUNGFzek1INFZBYkZ2by9JYVdSN0xZekt5eFRaK1ZWbXpRbWhNcGt6QjIzMmVIa3M0VkpiQTdjRm9SWkJ1STNDQT09Cg=="
     }
-  },
-  "pub_date": "2026-09-13T02:22:33Z"
+  }
 }

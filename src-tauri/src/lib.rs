@@ -6,47 +6,85 @@ use tauri::{
 };
 use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_updater::UpdaterExt;
+use tauri_plugin_dialog::DialogExt;
 
-fn check_for_updates_background(app_handle: tauri::AppHandle) {
+fn check_for_updates(app_handle: tauri::AppHandle, manual: bool) {
     tauri::async_runtime::spawn(async move {
-        // Allow Discord to initialize smoothly before checking
-        std::thread::sleep(std::time::Duration::from_secs(5));
+        if !manual {
+            // Allow Discord to initialize smoothly before checking
+            std::thread::sleep(std::time::Duration::from_secs(3));
+        }
 
         if let Ok(updater) = app_handle.updater() {
-            if let Ok(Some(update)) = updater.check().await {
-                println!("New update found: v{}", update.version);
-                
-                // Show notification in webview toast
-                if let Some(win) = app_handle.get_webview_window("main") {
-                    let js = format!(
-                        "console.log('[ScarCord] Found update v{}. Downloading in background...');",
-                        update.version
-                    );
-                    let _ = win.eval(&js);
+            match updater.check().await {
+                Ok(Some(update)) => {
+                    println!("New update found: v{}", update.version);
+                    let version_str = update.version.clone();
+                    
+                    let confirmed = app_handle
+                        .dialog()
+                        .message(format!(
+                            "A new version of ScarCord (v{}) is available!\n\nWould you like to download and install it now?",
+                            version_str
+                        ))
+                        .title("ScarCord Update Available")
+                        .kind(tauri_plugin_dialog::MessageDialogKind::Info)
+                        .buttons(tauri_plugin_dialog::MessageDialogButtons::OkCancelCustom(
+                            "Update Now".to_string(),
+                            "Later".to_string(),
+                        ))
+                        .blocking_show();
+
+                    if confirmed {
+                        let mut downloaded = 0;
+                        let res = update
+                            .download_and_install(
+                                |chunk_length, content_length| {
+                                    downloaded += chunk_length;
+                                    if let Some(total) = content_length {
+                                        println!("Downloaded {} / {} bytes", downloaded, total);
+                                    }
+                                },
+                                || {
+                                    println!("Download complete, installing update...");
+                                },
+                            )
+                            .await;
+
+                        if let Ok(()) = res {
+                            app_handle
+                                .dialog()
+                                .message("ScarCord has been updated successfully! The app will now restart.")
+                                .title("Update Installed")
+                                .blocking_show();
+                            app_handle.restart();
+                        } else if let Err(e) = res {
+                            eprintln!("Failed to install update: {}", e);
+                            app_handle
+                                .dialog()
+                                .message(format!("Failed to install update: {}", e))
+                                .title("Update Error")
+                                .blocking_show();
+                        }
+                    }
                 }
-
-                // Download and install update
-                let mut downloaded = 0;
-                let res = update
-                    .download_and_install(
-                        |chunk_length, content_length| {
-                            downloaded += chunk_length;
-                            if let Some(total) = content_length {
-                                println!("Downloaded {} / {} bytes", downloaded, total);
-                            }
-                        },
-                        || {
-                            println!("Download complete, installing update...");
-                        },
-                    )
-                    .await;
-
-                if let Ok(()) = res {
-                    println!("Update installed successfully. Prompting restart...");
-                    if let Some(win) = app_handle.get_webview_window("main") {
-                        let _ = win.eval(
-                            "if (confirm('ScarCord has downloaded an update. Restart now to apply?')) { window.location.reload(); }"
-                        );
+                Ok(None) => {
+                    if manual {
+                        app_handle
+                            .dialog()
+                            .message("You are already on the latest version of ScarCord!")
+                            .title("ScarCord Up to Date")
+                            .blocking_show();
+                    }
+                }
+                Err(e) => {
+                    eprintln!("Update check failed: {}", e);
+                    if manual {
+                        app_handle
+                            .dialog()
+                            .message(format!("Could not check for updates:\n{}", e))
+                            .title("Update Check Failed")
+                            .blocking_show();
                     }
                 }
             }
@@ -56,9 +94,10 @@ fn check_for_updates_background(app_handle: tauri::AppHandle) {
 
 fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
     let show_item = MenuItem::with_id(app, "show", "Open ScarCord", true, None::<&str>)?;
+    let check_updates_item = MenuItem::with_id(app, "check_updates", "Check for Updates...", true, None::<&str>)?;
     let restart_item = MenuItem::with_id(app, "reload", "Reload ScarCord", true, None::<&str>)?;
     let quit_item = MenuItem::with_id(app, "quit", "Quit ScarCord", true, None::<&str>)?;
-    let menu = Menu::with_items(app, &[&show_item, &restart_item, &quit_item])?;
+    let menu = Menu::with_items(app, &[&show_item, &check_updates_item, &restart_item, &quit_item])?;
 
     let icon = app.default_window_icon().cloned().ok_or("No default window icon")?;
 
@@ -74,6 +113,9 @@ fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
                     let _ = win.unminimize();
                     let _ = win.set_focus();
                 }
+            }
+            "check_updates" => {
+                check_for_updates(app.clone(), true);
             }
             "reload" => {
                 if let Some(win) = app.get_webview_window("main") {
@@ -113,10 +155,11 @@ fn setup_tray(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(move |app| {
             let app_handle = app.handle().clone();
-            check_for_updates_background(app_handle.clone());
+            check_for_updates(app_handle.clone(), false);
 
             // Client injection: 1:1 Discord native top-bar integration with proper icon clearance
             let init_script = r#"
