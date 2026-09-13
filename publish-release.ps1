@@ -29,8 +29,10 @@ $tauriConf = $tauriConf -replace '"version": ".*"', "`"version`": `"$Version`""
 Set-Content -Path $TauriConfPath -Value $tauriConf
 
 # 3. Build bundle using npx @tauri-apps/cli build with signing key
-Write-Host "Building Tauri release and generating signatures..." -ForegroundColor Yellow
-$env:TAURI_SIGNING_PRIVATE_KEY_PATH = $KeyPath
+Write-Host "Building Tauri release..." -ForegroundColor Yellow
+$env:CI = "true"
+$env:TAURI_SIGNING_PRIVATE_KEY = Get-Content $KeyPath -Raw
+$env:TAURI_SIGNING_PRIVATE_KEY_PASSWORD = ""
 
 Set-Location -LiteralPath "D:\ProjectP\ScarCord"
 npx @tauri-apps/cli build
@@ -44,6 +46,32 @@ if ($Cert) {
     Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*.exe" | ForEach-Object {
         Set-AuthenticodeSignature -FilePath $_.FullName -Certificate $Cert -TimestampServer "http://timestamp.digicert.com"
     }
+    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi\*.msi" | ForEach-Object {
+        Set-AuthenticodeSignature -FilePath $_.FullName -Certificate $Cert -TimestampServer "http://timestamp.digicert.com"
+    }
+} else {
+    Write-Warning "Could not find TrulyScarlet certificate in CurrentUser\My store."
+}
+
+# 5. Re-sign installer with Tauri Minisign AFTER Authenticode signing so hash matches exact bytes
+Write-Host "Generating accurate Minisign OTA signature for signed installer..." -ForegroundColor Yellow
+$SetupExe = Get-Item "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*_x64-setup.exe" | Select-Object -First 1
+npx @tauri-apps/cli signer sign --password "" "$($SetupExe.FullName)"
+
+$sig = Get-Content "$($SetupExe.FullName).sig" -Raw
+$latestJson = @{
+    version = "v$Version"
+    notes = "ScarCord v$Version - OTA Release"
+    pub_date = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+    platforms = @{
+        "windows-x86_64" = @{
+            signature = $sig.Trim()
+            url = "https://github.com/TrulyScarlet/ScarCord/releases/download/v$Version/$($SetupExe.Name)"
+        }
+    }
+} | ConvertTo-Json -Depth 5
+
+Set-Content -Path "D:\ProjectP\ScarCord\latest.json" -Value $latestJson
 } else {
     Write-Warning "Could not find TrulyScarlet certificate in CurrentUser\My store."
 }
