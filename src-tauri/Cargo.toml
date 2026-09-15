@@ -1,6 +1,6 @@
 [package]
 name = "scarcord"
-version = "0.1.5"
+version = "0.1.6"
 description = "ScarCord - Lightweight Discord Desktop Client"
 authors = ["TrulyScarlet"]
 edition = "2021"
@@ -39,5 +39,6 @@ lto = true
 opt-level = 3
 panic = "abort"
 strip = true
+
 
 

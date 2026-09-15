@@ -181,6 +181,18 @@ pub fn run() {
             // Client injection: 1:1 Discord native top-bar integration with proper icon clearance
             let init_script = r#"
                 (function() {
+                    // Spoof User-Agent for Discord WebRTC voice/video browser compatibility
+                    try {
+                        var isMac = navigator.platform && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+                        var chromeUA = isMac
+                            ? 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+                            : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36';
+
+                        Object.defineProperty(navigator, 'userAgent', { get: function() { return chromeUA; }, configurable: true });
+                        Object.defineProperty(navigator, 'appVersion', { get: function() { return chromeUA.replace('Mozilla/', ''); }, configurable: true });
+                        Object.defineProperty(navigator, 'vendor', { get: function() { return 'Google Inc.'; }, configurable: true });
+                    } catch (e) {}
+
                     function winCmd(action) {
                         try {
                             if (window.__TAURI_INTERNALS__ && window.__TAURI_INTERNALS__.invoke) {
@@ -443,6 +455,11 @@ pub fn run() {
                 .parse()
                 .expect("Failed to parse Discord URL");
 
+            #[cfg(target_os = "macos")]
+            let ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+            #[cfg(not(target_os = "macos"))]
+            let ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
+
             let mut builder = WebviewWindowBuilder::new(
                 app,
                 "main",
@@ -452,6 +469,7 @@ pub fn run() {
             .decorations(false)
             .inner_size(1280.0, 800.0)
             .min_inner_size(800.0, 600.0)
+            .user_agent(ua)
             .initialization_script(init_script)
             .on_navigation(move |nav_url| {
                 let host = nav_url.host_str().unwrap_or_default();
