@@ -1,9 +1,17 @@
 {
-  "notes": "ScarCord v0.1.6 - OTA Release",
+  "notes": "ScarCord v0.1.6 - OTA Release with macOS voice support",
   "platforms": {
     "windows-x86_64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEZxSGtDYlFaQmZTMXhtdERvYmVocktXNnh6RUpsWHQvRUthRkM4RHdlTmVYMjNtSUh0TFJockNacFZpT1VaRnI1QkRSRkw2eitKd0VNZlJsNTR0T1FFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NTAxMDAwCWZpbGU6U2NhckNvcmRfMC4xLjZfeDY0LXNldHVwLmV4ZQpnZ1NDUGtXMGVYT3Y1N1ZZaTArUS9sdm9abVJrcDBwNEtuaHNISGNaYXI5MEg5K2dDM21kZU9BT3JNR2NETGFkTzQ2YlAzdzlFVlk5WW5VUnVuZzNDdz09Cg==",
       "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.6/ScarCord_0.1.6_x64-setup.exe"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEdXVVV6M00vM0JuMFI1d0cyc25jZ2tabjJQSUdkN2RRdGt6NEpVUXgyZmZhUjd0THRML1JCcTN0WUhSMnJXLytBMG40TW1aYWU4QXNzNFZ2ejNLZ3dZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NTAxOTc1CWZpbGU6U2NhckNvcmQuYXBwLnRhci5negpYbzdGVmh4S3JnTDc3MnhUM2ZFWDYvVFdoMHdRbUdQbmF2OFAzSC80WFcrajBCSk9mcXVjTWtaODVlRVBKQjE1bUNZdEg1YjI0L1NNNTdqOEY0NHJBZz09Cg==",
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.6/ScarCord.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEdXVVV6M00vM0JuMFI1d0cyc25jZ2tabjJQSUdkN2RRdGt6NEpVUXgyZmZhUjd0THRML1JCcTN0WUhSMnJXLytBMG40TW1aYWU4QXNzNFZ2ejNLZ3dZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NTAxOTc1CWZpbGU6U2NhckNvcmQuYXBwLnRhci5negpYbzdGVmh4S3JnTDc3MnhUM2ZFWDYvVFdoMHdRbUdQbmF2OFAzSC80WFcrajBCSk9mcXVjTWtaODVlRVBKQjE1bUNZdEg1YjI0L1NNNTdqOEY0NHJBZz09Cg==",
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.6/ScarCord.app.tar.gz"
     }
   },
   "pub_date": "2026-09-15T19:36:41Z",
