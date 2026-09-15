@@ -84,17 +84,18 @@ git push origin master
 Write-Host "Creating GitHub release v$Version with OTA updater assets..." -ForegroundColor Green
 
 $Assets = @(
-    "D:\ProjectP\ScarCord\src-tauri\target\release\scarcord.exe"
+    "D:\ProjectP\ScarCord\src-tauri\target\release\scarcord.exe",
+    "D:\ProjectP\ScarCord\latest.json"
 )
 
-# Include installer assets
+# Include installer assets for current version only
 if (Test-Path "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis") {
-    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*.*" | ForEach-Object {
+    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\nsis\*$Version*" | ForEach-Object {
         $Assets += $_.FullName
     }
 }
 if (Test-Path "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi") {
-    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi\*.msi" | ForEach-Object {
+    Get-ChildItem "D:\ProjectP\ScarCord\src-tauri\target\release\bundle\msi\*$Version*" | ForEach-Object {
         $Assets += $_.FullName
     }
 }

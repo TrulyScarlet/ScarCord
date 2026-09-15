@@ -1,11 +1,11 @@
 {
-  "pub_date": "2026-09-13T18:50:31Z",
-  "version": "v0.1.4",
-  "notes": "ScarCord v0.1.4 - Windows Publisher TrulyScarlet metadata in NSIS template and certificate installer",
+  "pub_date": "2026-09-15T17:44:05Z",
+  "version": "v0.1.5",
+  "notes": "ScarCord v0.1.5 - OTA Release",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.4/ScarCord_0.1.4_x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEFyenlMUUsxYzJjTVlSdGlUa1MvZE16bGJuUnhtUlhENXdENDRMWWFqS3JvMnFJTm5LSzhnQWhoQU9jdEU4Slp2MHB4KzlOWUt5cUVKTnVKdGo5V1FBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5MzI1NDMxCWZpbGU6U2NhckNvcmRfMC4xLjRfeDY0LXNldHVwLmV4ZQpCWFFhS0lSejJrUE9WenJBNTV5RjBUWFZYcWV0dCthZ3F5TW1SM1pwVVBOaXA2bHhtMFg1bUljcEFDZSs0TThBWkoxNFlOeFJwOHh5WHJCVTk2N0dEUT09Cg=="
+      "url": "https://github.com/TrulyScarlet/ScarCord/releases/download/v0.1.5/ScarCord_0.1.5_x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRbnd6czVsRGR4OEhjaTFpMjBiSEVvWU1pVDRmQzdJd1pkbzI1SU4wQVpSbXFrZ2tQTVNWdjZsQnYwMWJSdytxUTR2QitLS3pUcUdKNW5YN2JzOGpGNWFjMlR2SEpoN1E0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NDk0MjQ1CWZpbGU6U2NhckNvcmRfMC4xLjVfeDY0LXNldHVwLmV4ZQpQbmhYMExzRlFNaEQ0bVNkOWFXYXVjYmFZMWJkbEJkaThrcWpmT1F3ckJBVmxhWm5wRjNyYy8rWlphWmJjWDBBcHRGb2ZNeEFPaTJUV1pndDJTd01BUT09Cg=="
     }
   }
 }

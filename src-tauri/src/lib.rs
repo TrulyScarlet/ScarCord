@@ -10,6 +10,8 @@ use tauri_plugin_dialog::DialogExt;
 
 #[cfg(target_os = "windows")]
 mod audio_mixer;
+#[cfg(target_os = "windows")]
+mod memory;
 
 fn check_for_updates(app_handle: tauri::AppHandle, manual: bool) {
     tauri::async_runtime::spawn(async move {
@@ -469,21 +471,59 @@ pub fn run() {
                 let user_data_path = std::path::PathBuf::from(app_data).join("ScarCord").join("EBWebView");
                 builder = builder.data_directory(user_data_path);
 
-                builder = builder.additional_browser_args(
-                    "--use-fake-ui-for-media-stream --autoplay-policy=no-user-gesture-required",
-                );
+                let browser_args = [
+                    "--use-fake-ui-for-media-stream",
+                    "--autoplay-policy=no-user-gesture-required",
+                    "--js-flags=--max-old-space-size=384",
+                    "--renderer-process-limit=2",
+                    "--enable-features=TrimOnMemoryPressure,IntensiveWakeUpThrottling",
+                    "--disable-background-networking",
+                    "--disable-component-update",
+                    "--disable-domain-reliability",
+                    "--disable-breakpad",
+                ].join(" ");
+
+                builder = builder.additional_browser_args(&browser_args);
             }
 
             builder.build()?;
 
             setup_tray(app)?;
 
+            #[cfg(target_os = "windows")]
+            {
+                let app_handle_mem = app.handle().clone();
+                std::thread::spawn(move || {
+                    loop {
+                        std::thread::sleep(std::time::Duration::from_secs(45));
+                        if let Some(win) = app_handle_mem.get_webview_window("main") {
+                            let is_hidden = !win.is_visible().unwrap_or(true);
+                            let is_minimized = win.is_minimized().unwrap_or(false);
+                            if is_hidden || is_minimized {
+                                memory::trim_memory();
+                            }
+                        }
+                    }
+                });
+            }
+
             Ok(())
         })
         .on_window_event(|window, event| {
-            if let WindowEvent::CloseRequested { api, .. } = event {
-                api.prevent_close();
-                let _ = window.hide();
+            match event {
+                WindowEvent::CloseRequested { api, .. } => {
+                    api.prevent_close();
+                    let _ = window.hide();
+                    #[cfg(target_os = "windows")]
+                    memory::trim_memory();
+                }
+                #[cfg(target_os = "windows")]
+                WindowEvent::Resized(_) => {
+                    if window.is_minimized().unwrap_or(false) {
+                        memory::trim_memory();
+                    }
+                }
+                _ => {}
             }
         })
         .run(tauri::generate_context!())
